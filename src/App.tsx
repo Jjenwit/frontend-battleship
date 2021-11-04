@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { io, Socket } from 'socket.io-client';
+import { io, Socket } from "socket.io-client";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -21,7 +21,7 @@ const FormControl = styled.div`
 `;
 
 const Label = styled.label`
-  font-family: 'ThaleahFat';
+  font-family: "ThaleahFat";
   letter-spacing: 3px;
   color: #fca311;
   font-size: 4em;
@@ -29,7 +29,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  font-family: 'ThaleahFat';
+  font-family: "ThaleahFat";
   font-size: 2em;
   color: #fca311;
   height: 40px;
@@ -42,7 +42,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  font-family: 'ThaleahFat';
+  font-family: "ThaleahFat";
   font-size: 3em;
   position: relative;
   left: 215px;
@@ -55,18 +55,16 @@ const Button = styled.button`
 `;
 
 function App() {
-  const [roomId, setRoomId] = useState('');
-  const [password, setPassword] = useState('');
-  const [server, setServer] = useState('');
+  const [roomId, setRoomId] = useState("");
+  const [password, setPassword] = useState("");
+  const [server] = useState(
+    "http://battleship.southeastasia.azurecontainer.io:3031"
+  );
   const [socket, setSocket] = useState<Socket>();
 
   useEffect(() => {
     setSocket(io(server));
   }, [server]);
-
-  const onServerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setServer(e.target.value);
-  };
 
   const onRoomIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRoomId(e.target.value);
@@ -78,22 +76,13 @@ function App() {
 
   const onSubmit = () => {
     if (socket) {
-      socket.emit('reset', roomId, password);
+      socket.emit("reset", roomId, password);
       console.log(server, roomId, password);
     }
   };
 
   return (
     <Container>
-      <FormControl>
-        <Label htmlFor="server">Server: </Label>
-        <Input
-          type="text"
-          id="server"
-          onChange={onServerChange}
-          value={server}
-        />
-      </FormControl>
       <FormControl>
         <Label htmlFor="roomid">RoomId: </Label>
         <Input
